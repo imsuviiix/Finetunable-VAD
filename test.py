@@ -1,1 +1,0 @@
-print('it is a just test.py. It will be deleted soon')
