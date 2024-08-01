@@ -21,16 +21,16 @@ def main(type:str):
     "--background_data_root", our_background_data_root,
     "--log",
     "--rebalance_method", 'over',
-    "--google_data_root", google_data_root,
-    "--demo",
-    "--demo_rate", '0.05'
+    "--google_data_root", google_data_root#,
+    # "--demo",
+    # "--demo_rate", '0.05'
     ]
 
     subprocess.run(command)
 
 
 if __name__ == '__main__':
-    main('sub')
+    main('origin')
 
 
   

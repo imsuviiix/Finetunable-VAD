@@ -11,7 +11,15 @@
 !requirements.txt
 /mlruns
 __pycache__
-
+*.TextGrid
+*.png
+*.zip
+/old_data
+/SDH_DATA
+/src/data_preprocessing
+*VAD copy.py
+*process_vad_data.py
+*process_vad_data4flac.py
 
 
 # log and data files

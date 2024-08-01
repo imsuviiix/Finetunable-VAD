@@ -39,14 +39,14 @@ def set_dataset(train,val,test):
     val_dataset = val
     test_dataset = test
 
-    return train, val, test
+    return train_dataset, val_dataset, test_dataset
 
 
 def main():
     args = [
-     "--train_path", 'old_data/our_manifest/balanced_noise_training_manifest.json,old_data/our_manifest/balanced_speech_training_manifest.json',
-     "--validation_path", 'old_data/our_manifest/balanced_noise_validation_manifest.json,old_data/our_manifest/balanced_speech_validation_manifest.json',
-     "--test_path", 'old_data/our_manifest/balanced_noise_testing_manifest.json,old_data/our_manifest/balanced_speech_testing_manifest.json'
+     "--train_path", 'old_data/our_manifest/for_general/balanced_noise_training_manifest.json,old_data/our_manifest/for_general/balanced_speech_training_manifest.json',
+     "--validation_path", 'old_data/our_manifest/for_general/balanced_noise_validation_manifest.json,old_data/our_manifest/for_general/balanced_speech_validation_manifest.json',
+     "--test_path", 'old_data/our_manifest/for_general/balanced_noise_testing_manifest.json,old_data/our_manifest/for_general/balanced_speech_testing_manifest.json'
     ]
 
     arg = get_args(args)
@@ -59,7 +59,7 @@ def main():
 
     train_dataset, val_dataset, test_dataset = set_dataset(arg.train_path,
                                                            arg.validation_path,
-                                                           arg.test_path)
+                                                           arg.test_path)   
     
     config.model.train_ds.manifest_filepath = train_dataset
     config.model.validation_ds.manifest_filepath = val_dataset
@@ -71,10 +71,14 @@ def main():
     config.trainer.accelerator = accelerator
 
 # Reduces maximum number of epochs to 5 for quick demonstration
-    config.trainer.max_epochs = 1
-
+    config.trainer.max_epochs = 20
+    config.model.train_ds.batch_size = 256
+    config.model.train_ds.num_worker = 15
+    config.model.validation_ds.batch_size = 256
+    config.model.validation_ds.num_worker = 15
 # Remove distributed training flags
     config.trainer.strategy = 'auto'
+    
     print(OmegaConf.to_yaml(config))
 
     trainer = pl.Trainer(**config.trainer)
@@ -89,11 +93,10 @@ def main():
 
     trainer.fit(vad_model)
 
-    return config, vad_model, trainer
 
 
-# if __name__ == '__main__':
+if __name__ == '__main__':
 
-config, vad_model, trainer = main()
+    main()
     
     
