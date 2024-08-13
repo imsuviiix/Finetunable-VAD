@@ -22,6 +22,7 @@ def extract_logits(model, dataloader):
         # print(batch)
         # break
         logits = model(input_signal=audio_signal, input_signal_length=audio_signal_len)
+        print(logits.shape)
         # print(logits)
 
         logits_buffer.append(logits)
@@ -36,14 +37,14 @@ def extract_logits(model, dataloader):
 
 
 if __name__ == '__main__':
-    vad_model = nemo_asr.models.EncDecClassificationModel.restore_from('nemo_experiments\marblenet\\2024-07-30_12-40-51\checkpoints\marblenet.nemo')
+    vad_model = nemo_asr.models.EncDecClassificationModel.restore_from('nemo_experiments\marblenet\\2024-08-02_09-39-12\checkpoints\marblenet.nemo')
 
-    checkpoint_path = 'nemo_experiments\marblenet\\2024-07-30_12-40-51\checkpoints\marblenet--val_loss=0.0132-epoch=6.ckpt'
+    checkpoint_path = 'nemo_experiments/marblenet/2024-08-02_09-39-12/checkpoints/marblenet--val_loss=0.0101-epoch=35.ckpt'
     checkpoint = torch.load(checkpoint_path)
     vad_model.load_state_dict(checkpoint['state_dict'], strict=False)
 
     config = vad_model.hparams 
-    config.cfg.test_ds.manifest_filepath='old_data\our_manifest\\fine_tune\\test_kaggle.json'#'old_data/our_manifest/balanced_noise_testing_manifest.json,old_data/our_manifest/balanced_speech_testing_manifest.json' #'old_data\our_manifest\\fine_tune\\test_kaggle.json'
+    # config.cfg.test_ds.manifest_filepath='old_data/our_manifest/balanced_noise_testing_manifest.json,old_data/our_manifest/balanced_speech_testing_manifest.json' #'old_data\our_manifest\\fine_tune\\test_kaggle.json'
     vad_model.setup_test_data(config.cfg.test_ds)
     test_dl = vad_model._test_dl
 

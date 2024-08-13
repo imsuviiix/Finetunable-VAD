@@ -65,7 +65,11 @@ def plot_audio_with_speech_segments(audio_filepath: str, segments: list, target_
 
 def main():
 
-    args = ['--audio_filepath', 'SDH_DATA/검토필요_wav/전문 용어/202407161039_test_35163392-cb87-4d40-bb07-20b6e0ffca8f_DESKTOP-RGVCDB1.wav']
+    args = ['--audio_filepath', 'C:/Users/conta/OneDrive/바탕 화면/프로젝트/Marblenet/SDH_DATA/wav/20240717/202407170909_test_3b04210e-dfc9-4f3e-b3e8-86fc4380f280_DESKTOP-RGVCDB1.wav'
+            ,'--model_path', 'nemo_experiments/marblenet/2024-08-02_09-39-12/checkpoints/marblenet--val_loss=0.0101-epoch=35.ckpt'
+            ,'--window_length_in_sec', '0.05'
+            , '--shift_length_in_sec', '0.2'
+            , '--threshold', '0.']
 
     arg = get_args(args)
     model_path = arg.model_path
@@ -85,6 +89,7 @@ def main():
     vad_model.to(device)
     vad_model.eval()
 
+    vad_model.preprocessor
     # Load the audio file
     audio, sr = load_wav(audio_filepath, target_sr=target_sr)
     audio_length = audio.shape[0]
@@ -132,7 +137,7 @@ def main():
             if not is_speech:
                 is_speech = True
                 segment_start = start
-                threshold = 0.35
+                threshold = 0.45
         else:
             if is_speech:
                 is_speech = False

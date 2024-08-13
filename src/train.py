@@ -71,13 +71,16 @@ def main():
     config.trainer.accelerator = accelerator
 
 # Reduces maximum number of epochs to 5 for quick demonstration
-    config.trainer.max_epochs = 20
-    config.model.train_ds.batch_size = 256
+    config.trainer.max_epochs = 40
+    config.model.train_ds.batch_size = 512
     config.model.train_ds.num_worker = 15
-    config.model.validation_ds.batch_size = 256
+    config.model.validation_ds.batch_size = 512
     config.model.validation_ds.num_worker = 15
+    config.model.optim.name = 'adam'
+    config.model.optim.lr = 0.001
 # Remove distributed training flags
     config.trainer.strategy = 'auto'
+
     
     print(OmegaConf.to_yaml(config))
 
