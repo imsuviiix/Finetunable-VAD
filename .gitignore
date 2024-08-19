@@ -15,7 +15,8 @@ __pycache__
 *.TextGrid
 *.png
 *.zip
-/old_data
+old_data/** 
+!old_data/**/.gitkeep 
 /SDH_DATA
 /src/data_preprocessing
 *VAD copy.py
