@@ -7,6 +7,7 @@
 *.ipynb
 *.log
 *.yaml
+/notebooks
 /NeMo
 !requirements.txt
 /mlruns
@@ -14,13 +15,15 @@ __pycache__
 *.TextGrid
 *.png
 *.zip
-/old_data
+old_data/** 
+!old_data/**/.gitkeep 
 /SDH_DATA
 /src/data_preprocessing
 *VAD copy.py
 *process_vad_data.py
 *process_vad_data4flac.py
-
+!vad_export.ipynb
+*.onnx
 
 # log and data files
 *.model
